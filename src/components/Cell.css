@@ -1,12 +1,17 @@
 .cell {
   width: 20px;
   height: 20px;
-  border: 1px solid #ddd;
-  background-color: #fff;
+  border: 1px solid #e5e5e7;
+  background-color: var(--cell-dead-color);
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.1s;
+  border-radius: 4px;
 }
 
 .cell.alive {
-  background-color: #000;
+  background-color: var(--cell-alive-color);
+}
+
+.cell:hover {
+  transform: scale(1.05);
 }

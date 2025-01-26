@@ -1,3 +1,4 @@
+// conways-game-of-life/src/components/Cell.jsx
 import React from 'react';
 import './Cell.css';
 
