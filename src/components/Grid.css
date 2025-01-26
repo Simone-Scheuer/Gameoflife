@@ -1,0 +1,8 @@
+.grid {
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.row {
+  display: flex;
+} 
