@@ -5,8 +5,32 @@
   border-radius: 8px;
   overflow: hidden;
   background-color: #ffffff;
+  position: relative;
+}
+
+.grid-active {
+  border: 2px dashed #007bff;
+  background-color: rgba(0, 123, 255, 0.1);
 }
 
 .row {
   display: flex;
+}
+
+.pattern-preview {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pattern-preview .cell {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #e5e5e7;
+  background-color: var(--cell-alive-color);
+}
+
+@media (max-width: 600px) {
+  .grid {
+    width: 100%;
+  }
 } 

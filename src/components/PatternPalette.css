@@ -1,0 +1,37 @@
+/* conways-game-of-life/src/components/PatternPalette.css */
+.pattern-palette {
+    margin: 20px 0;
+    text-align: left;
+    width: 220px;
+  }
+  
+  .pattern-palette h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--text-color);
+  }
+  
+  .patterns {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .pattern-item {
+    background-color: var(--button-background);
+    color: var(--text-color);
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    border: 1px solid var(--button-border);
+    border-radius: 8px;
+    cursor: grab;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s, transform 0.1s;
+  }
+  
+  .pattern-item:hover {
+    background-color: var(--button-hover-background);
+  }
+  
+  .pattern-item:active {
+    transform: scale(0.98);
+  }
