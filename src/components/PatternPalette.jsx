@@ -39,7 +39,7 @@ function PatternItem({ name }) {
     <div 
       className="pattern-item-wrapper"
       ref={drag} 
-      style={{ opacity: isDragging ? 0.1 : 0.0 }}
+      style={{ opacity: isDragging ? 0.1 : 1}}
     >
       <span className="pattern-name">{name}</span>
     </div>

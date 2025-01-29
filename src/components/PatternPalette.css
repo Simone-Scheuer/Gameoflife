@@ -1,43 +1,43 @@
-/* conways-game-of-life/src/components/PatternPalette.css */
+/* gameoflife/conways-game-of-life/src/components/PatternPalette.css */
+
 .pattern-palette {
-    margin: 10px 0;
-    text-align: center;
-    width: 100%;
-    user-select: none;
-  }
-  
-  .pattern-palette-title {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: #333;
-    cursor: pointer;
-  }
-  
-  .patterns {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-  }
-  
-  .pattern-item-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px 10px;
-    color: #007bff;
-    border: none; /* Removed the border */
-    cursor: grab;
-    opacity: 0.0;
-    background-color: transparent;
-  }
-  
-  .pattern-item-wrapper:hover {
-    opacity: 0.1; /* Adjusted opacity for hover effect */
-    background-color: transparent; /* Changed to transparent */
-  }
-  
-  .pattern-name {
-    font-size: 14px;
-  }
+  margin: 10px 0;
+  text-align: center;
+  width: 100%;
+  user-select: none;
+}
+
+.pattern-palette-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+  cursor: pointer;
+}
+
+.patterns {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pattern-item-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  color: #007bff;
+  border: none;
+  cursor: grab;
+  opacity: 1; /* Ensures opacity remains fully opaque */
+  /* Removed background-color: transparent; as it's redundant */
+}
+
+.pattern-item-wrapper:hover {
+  background-color: rgba(0, 123, 255, 0.1); /* Optional: Add a subtle background on hover */
+}
+
+.pattern-name {
+  font-size: 14px;
+}

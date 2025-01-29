@@ -109,10 +109,10 @@ const Grid = React.memo(({ grid, setGrid, toggleCell }) => {
             top: `${preview.position.i * cellSize}px`,
             left: `${preview.position.j * cellSize}px`,
             pointerEvents: 'none',
-            opacity: 0.3,
-            zIndex: 10,
-            width: `${getPatternWidth(patterns[preview.pattern]) * cellSize}px`,
-            height: `${getPatternHeight(patterns[preview.pattern]) * cellSize}px`,
+            opacity: 1,
+            zIndex: 15,
+            width: `${cellSize}px`, // Match normal cell size
+            height: `${cellSize}px`, // Match normal cell size
           }}
         >
           {patterns[preview.pattern].map(([x, y], index) => (
@@ -123,9 +123,11 @@ const Grid = React.memo(({ grid, setGrid, toggleCell }) => {
                 position: 'absolute',
                 top: `${x * cellSize}px`,
                 left: `${y * cellSize}px`,
-                width: `${cellSize}px`,
-                height: `${cellSize}px`,
-                backgroundColor: 'rgba(128, 128, 128, 0.5)',
+                width: `${cellSize - 2}px`, // Account for borders
+                height: `${cellSize - 2}px`,
+                backgroundColor: 'inherit', // Match normal cell styling
+                border: '1px solid #e5e5e7',
+                borderRadius: '1px',
               }}
             />
           ))}
