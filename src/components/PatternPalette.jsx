@@ -4,7 +4,7 @@ import patterns from '../patterns';
 import './PatternPalette.css';
 
 function PatternPalette() {
-  const [isOpen, setIsOpen] = useState(true); // Set to true to show options by default
+  const [isOpen, setIsOpen] = useState(true); // Show options by default
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -12,11 +12,11 @@ function PatternPalette() {
 
   return (
     <div className="pattern-palette">
-      <h2 onClick={toggleDropdown} style={{ cursor: 'pointer' }}>
-        Pattern Palette {isOpen ? '▲' : '▼'}
+      <h2 onClick={toggleDropdown} className="pattern-palette-title">
+        Drag and Drop Patterns {isOpen ? '▲' : '▼'}
       </h2>
       {isOpen && (
-        <div className="patterns" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}> {/* Center items */}
+        <div className="patterns">
           {Object.keys(patterns).map((patternName) => (
             <PatternItem key={patternName} name={patternName} />
           ))}
@@ -37,11 +37,11 @@ function PatternItem({ name }) {
 
   return (
     <div 
-      className="pattern-item" 
+      className="pattern-item-wrapper"
       ref={drag} 
-      style={{ opacity: isDragging ? 0.5 : 1, margin: '0 10px' }} // Add margin for spacing
+      style={{ opacity: isDragging ? 0.1 : 0.0 }}
     >
-      {name}
+      <span className="pattern-name">{name}</span>
     </div>
   );
 }

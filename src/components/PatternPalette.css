@@ -1,39 +1,43 @@
 /* conways-game-of-life/src/components/PatternPalette.css */
 .pattern-palette {
-    margin: 5px 0;
-    text-align: left;
-    width: 180px;
+    margin: 10px 0;
+    text-align: center;
+    width: 100%;
+    user-select: none;
   }
   
-  .pattern-palette h2 {
-    font-size: 1.25rem;
-    margin-bottom: 8px;
-    color: var(--text-color);
+  .pattern-palette-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+    cursor: pointer;
   }
   
   .patterns {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
   }
   
-  .pattern-item {
-    background-color: var(--button-background);
-    color: var(--text-color);
-    padding: 6px 10px;
-    margin-bottom: 6px;
-    border: 1px solid var(--button-border);
-    border-radius: 6px;
+  .pattern-item-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    color: #007bff;
+    border: none; /* Removed the border */
     cursor: grab;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.2s, transform 0.1s;
+    opacity: 0.0;
+    background-color: transparent;
+  }
+  
+  .pattern-item-wrapper:hover {
+    opacity: 0.1; /* Adjusted opacity for hover effect */
+    background-color: transparent; /* Changed to transparent */
+  }
+  
+  .pattern-name {
     font-size: 14px;
-  }
-  
-  .pattern-item:hover {
-    background-color: var(--button-hover-background);
-  }
-  
-  .pattern-item:active {
-    transform: scale(0.98);
   }

@@ -4,7 +4,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   overflow: hidden;
-  background-color: #ffffff;
+  background-color: #8b8b8b;
   position: relative;
   border: 1px solid #585858;
 }
@@ -12,7 +12,6 @@
 .grid-active {
   border: 2px dashed #007bff;
   background-color: rgba(0, 123, 255, 0.1);
-  background-color: #ffffff;
 }
 
 .row {
@@ -20,17 +19,16 @@
 }
 
 .pattern-preview {
-  display: flex;
-  flex-wrap: wrap;
-  background-color: rgba(96, 96, 96, 0.1);
-  
+  pointer-events: none;
+  opacity: 0.3;
+  z-index: 10;
 }
 
-.pattern-preview .cell {
-  width: 20px;
-  height: 20px;
+.cell-preview {
   border: 1px solid #e5e5e7;
-  background-color: #575757;
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+
 }
 
 @media (max-width: 600px) {

@@ -1,11 +1,9 @@
 .cell {
-  width: 20px;
-  height: 20px;
   border: 1px solid #e5e5e7;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.1s;
-  border-radius: 4px;
-  }
+  border-radius: 1px;
+}
 
 .cell:hover {
   transform: scale(1.05);

@@ -6,8 +6,8 @@ import Controls from './components/Controls';
 import PatternPalette from './components/PatternPalette';
 import './App.css';
 
-const numRows = 30;
-const numCols = 50;
+const numRows = 60;
+const numCols = 100;
 
 // Function to create an empty grid initialized with 0 (dead)
 const generateEmptyGrid = () => {
@@ -147,8 +147,8 @@ function App() {
         <PatternPalette />
         <Grid 
           grid={grid} 
-          setGrid={setGrid} // Pass the setter function for patterns
-          toggleCell={toggleCell} // Pass the toggleCell function for individual cells
+          setGrid={setGrid}
+          toggleCell={toggleCell} 
         />
         <p>
           This is a simple implementation of Conway's Game of Life.

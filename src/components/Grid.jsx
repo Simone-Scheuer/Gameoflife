@@ -6,6 +6,7 @@ import './Grid.css';
 
 const Grid = React.memo(({ grid, setGrid, toggleCell }) => {
   const [preview, setPreview] = useState({ pattern: null, position: { i: 0, j: 0 } });
+  const cellSize = 11; // Halved cell size
 
   const [{ isOver, canDrop }, drop] = useDrop(() => ({
     accept: 'PATTERN',
@@ -15,8 +16,6 @@ const Grid = React.memo(({ grid, setGrid, toggleCell }) => {
       if (!gridElement || !clientOffset) return;
 
       const gridBounds = gridElement.getBoundingClientRect();
-      const cellSize = 22; // 20px cell + 2px border
-
       const relativeX = clientOffset.x - gridBounds.left;
       const relativeY = clientOffset.y - gridBounds.top;
 
@@ -34,8 +33,6 @@ const Grid = React.memo(({ grid, setGrid, toggleCell }) => {
       if (!gridElement || !clientOffset) return;
 
       const gridBounds = gridElement.getBoundingClientRect();
-      const cellSize = 22; // 20px cell + 2px border
-
       const relativeX = clientOffset.x - gridBounds.left;
       const relativeY = clientOffset.y - gridBounds.top;
 
@@ -43,18 +40,23 @@ const Grid = React.memo(({ grid, setGrid, toggleCell }) => {
       const j = Math.floor(relativeX / cellSize);
 
       applyPattern(item.name, i, j);
-      setPreview({ pattern: null, position: { i: 0, j: 0 } });
+      setPreview({ pattern: null, position: { i, j } });
     },
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
       canDrop: !!monitor.canDrop(),
     }),
-  }), [setGrid]);
+  }), [setGrid, cellSize]);
 
   const applyPattern = (patternName, startRow, startCol) => {
     const pattern = patterns[patternName];
     if (!pattern) {
       console.error(`Pattern "${patternName}" not found.`);
+      return;
+    }
+
+    if (!Array.isArray(pattern)) {
+      console.error(`Pattern "${patternName}" is not an array.`);
       return;
     }
 
@@ -65,7 +67,7 @@ const Grid = React.memo(({ grid, setGrid, toggleCell }) => {
         const row = startRow + x;
         const col = startCol + y;
         if (row >= 0 && row < newGrid.length && col >= 0 && col < newGrid[0].length) {
-          newGrid[row][col] = 1; // Reset age to 1 on rebirth
+          newGrid[row][col] = newGrid[row][col] === 0 ? 1 : newGrid[row][col] + 1; // Activate or increment age
         }
       });
 
@@ -80,6 +82,10 @@ const Grid = React.memo(({ grid, setGrid, toggleCell }) => {
       className={`grid ${isActive ? 'grid-active' : ''}`} 
       ref={drop} 
       id="grid-container"
+      style={{
+        width: `${cellSize * grid[0].length}px`,
+        height: `${cellSize * grid.length}px`
+      }}
     >
       {grid.map((row, i) => (
         <div key={`row-${i}`} className="row">
@@ -88,33 +94,38 @@ const Grid = React.memo(({ grid, setGrid, toggleCell }) => {
               key={`cell-${i}-${j}`} 
               age={age} 
               toggle={() => toggleCell(i, j)} 
+              cellSize={cellSize}
             />
           ))}
         </div>
       ))}
 
       {/* Pattern Preview Overlay */}
-      {preview.pattern && (
+      {preview.pattern && patterns[preview.pattern] && Array.isArray(patterns[preview.pattern]) && (
         <div 
           className="pattern-preview" 
           style={{
             position: 'absolute',
-            top: preview.position.i * 22, // cellSize
-            left: preview.position.j * 22, // cellSize
+            top: `${preview.position.i * cellSize}px`,
+            left: `${preview.position.j * cellSize}px`,
             pointerEvents: 'none',
             opacity: 0.3,
-            zIndex: 10, // Ensure the overlay is above the grid but not hiding it
+            zIndex: 10,
+            width: `${getPatternWidth(patterns[preview.pattern]) * cellSize}px`,
+            height: `${getPatternHeight(patterns[preview.pattern]) * cellSize}px`,
           }}
         >
           {patterns[preview.pattern].map(([x, y], index) => (
             <div 
               key={index} 
-              className="cell"
+              className="cell-preview"
               style={{
                 position: 'absolute',
-                top: x * 22,
-                left: y * 22,
-                backgroundColor: 'rgba(128, 128, 128, 0.5)', // Grey with transparency
+                top: `${x * cellSize}px`,
+                left: `${y * cellSize}px`,
+                width: `${cellSize}px`,
+                height: `${cellSize}px`,
+                backgroundColor: 'rgba(128, 128, 128, 0.5)',
               }}
             />
           ))}
@@ -125,3 +136,16 @@ const Grid = React.memo(({ grid, setGrid, toggleCell }) => {
 });
 
 export default Grid;
+
+// Helper functions
+function getPatternWidth(pattern) {
+  if (!pattern || !Array.isArray(pattern)) return 0;
+  const maxY = Math.max(...pattern.map(([x, y]) => y));
+  return maxY + 1;
+}
+
+function getPatternHeight(pattern) {
+  if (!pattern || !Array.isArray(pattern)) return 0;
+  const maxX = Math.max(...pattern.map(([x, y]) => x));
+  return maxX + 1;
+}
