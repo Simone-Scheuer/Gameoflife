@@ -3,10 +3,7 @@ import './Controls.css';
 
 function Controls({ 
   running, 
-  setRunning, 
   toggleRunning, 
-  runSimulation, 
-  setGrid, 
   speed, 
   setSpeed, 
   handleReset 
@@ -17,29 +14,28 @@ function Controls({
 
   return (
     <div className="controls">
-      <div>
-        {!running ? (
-          <button onClick={toggleRunning}>Start</button>
-        ) : (
-          <button onClick={toggleRunning}>Stop</button>
-        )}
-        <button onClick={handleReset}>Reset</button>
-      </div>
+      {!running ? (
+        <button onClick={toggleRunning}>Start</button>
+      ) : (
+        <button onClick={toggleRunning}>Stop</button>
+      )}
 
       <div className="speed-control">
-        <label htmlFor="speedRange">Speed: </label>
+        <label htmlFor="speedRange">Speed:</label>
         <input
           type="range"
           id="speedRange"
           name="speedRange"
-          min="10"
-          max="500"
-          step="10"
+          min="1" // Minimum set to 1 generation per second
+          max="20" // Maximum set to 20 generations per second
+          step="1"
           value={speed}
           onChange={handleSpeedChange}
         />
-        <span>{speed} ms</span>
+        <span>{speed} gen/sec</span>
       </div>
+
+      <button onClick={handleReset}>Reset</button>
     </div>
   );
 }

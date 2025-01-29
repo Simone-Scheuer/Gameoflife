@@ -9,7 +9,7 @@ import './App.css';
 const numRows = 30;
 const numCols = 50;
 
-// Function to create an empty grid
+// Function to create an empty grid initialized with 0 (dead)
 const generateEmptyGrid = () => {
   const rows = [];
   for (let i = 0; i < numRows; i++) {
@@ -21,10 +21,16 @@ const generateEmptyGrid = () => {
 function App() {
   const [grid, setGrid] = useState(() => generateEmptyGrid());
   const [running, setRunning] = useState(false);
-  const [speed, setSpeed] = useState(100); // Speed in milliseconds
+  const [speed, setSpeed] = useState(10); // Generations per second
+  const [generation, setGeneration] = useState(0); // New state for generation
 
   const runningRef = useRef(running);
   runningRef.current = running;
+
+  const speedRef = useRef(speed);
+  useEffect(() => {
+    speedRef.current = speed;
+  }, [speed]);
 
   const runSimulation = useCallback(() => {
     if (!runningRef.current) {
@@ -32,16 +38,16 @@ function App() {
     }
 
     setGrid((g) => {
-      const newGrid = g.map(arr => [...arr]);
+      const newGrid = g.map((row) => [...row]);
 
       for (let i = 0; i < numRows; i++) {
         for (let j = 0; j < numCols; j++) {
           let neighbors = 0;
           const directions = [
-            [0,1], [0,-1],
-            [1,0], [-1,0],
-            [1,1], [-1,-1],
-            [1,-1], [-1,1]
+            [0, 1], [0, -1],
+            [1, 0], [-1, 0],
+            [1, 1], [-1, -1],
+            [1, -1], [-1, 1]
           ];
 
           // Count live neighbors
@@ -49,15 +55,28 @@ function App() {
             const newI = i + x;
             const newJ = j + y;
             if (newI >= 0 && newI < numRows && newJ >= 0 && newJ < numCols) {
-              neighbors += g[newI][newJ];
+              if (g[newI][newJ] > 0) {
+                neighbors += 1;
+              }
             }
           });
 
-          // Apply Conway's rules
-          if (g[i][j] === 1 && (neighbors < 2 || neighbors > 3)) {
-            newGrid[i][j] = 0;
-          } else if (g[i][j] === 0 && neighbors === 3) {
-            newGrid[i][j] = 1;
+          // Apply Conway's rules with age tracking
+          if (g[i][j] > 0) {
+            // Cell is alive
+            if (neighbors < 2 || neighbors > 3) {
+              // Cell dies
+              newGrid[i][j] = 0;
+            } else {
+              // Cell survives and ages
+              newGrid[i][j] = Math.min(g[i][j] + 1, 10);
+            }
+          } else {
+            // Cell is dead
+            if (neighbors === 3) {
+              // Cell becomes alive
+              newGrid[i][j] = 1;
+            }
           }
         }
       }
@@ -65,23 +84,21 @@ function App() {
       return newGrid;
     });
 
-    setTimeout(runSimulation, speed);
-  }, [speed]);
+    setGeneration((gen) => gen + 1); // Increment generation count
+
+    setTimeout(runSimulation, 1000 / speedRef.current); // Adjust delay based on speed
+  }, []);
 
   useEffect(() => {
     if (running) {
       runSimulation();
     }
     // Cleanup on unmount or when dependencies change
-    return () => {
-      // Optional: Clear any timeouts if you store their IDs
-      // Example:
-      // clearTimeout(timeoutIdRef.current);
-    };
+    return () => {};
   }, [runSimulation, running]);
 
   const toggleRunning = () => {
-    setRunning(prev => !prev);
+    setRunning((prev) => !prev);
     if (!running) {
       runningRef.current = true;
       runSimulation();
@@ -91,6 +108,7 @@ function App() {
   const handleReset = () => {
     setRunning(false);
     setGrid(generateEmptyGrid());
+    setGeneration(0); // Reset generation count
   };
 
   const toggleCell = (i, j) => {
@@ -98,7 +116,7 @@ function App() {
       const newGrid = g.map((row, rowIndex) =>
         row.map((cell, colIndex) => {
           if (rowIndex === i && colIndex === j) {
-            return cell ? 0 : 1;
+            return cell > 0 ? 0 : 1;
           }
           return cell;
         })
@@ -111,16 +129,21 @@ function App() {
     <DndProvider backend={HTML5Backend}>
       <div className="App">
         <h1>Conway's Game of Life</h1>
-        <Controls 
-          running={running} 
-          setRunning={setRunning} 
-          toggleRunning={toggleRunning}
-          runSimulation={runSimulation}
-          setGrid={setGrid}
-          speed={speed}
-          setSpeed={setSpeed}
-          handleReset={handleReset}
-        />
+        <div className="controls-container">
+          <Controls 
+            running={running} 
+            setRunning={setRunning} 
+            toggleRunning={toggleRunning}
+            runSimulation={runSimulation}
+            setGrid={setGrid}
+            speed={speed}
+            setSpeed={setSpeed}
+            handleReset={handleReset}
+          />
+        </div>
+        <div className="generation-counter">
+          Generation: {generation}
+        </div>
         <PatternPalette />
         <Grid 
           grid={grid} 

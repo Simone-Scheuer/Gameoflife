@@ -1,11 +1,14 @@
 .controls {
+  margin-top: 10px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
 }
 
 .controls button {
-  margin: 10px;
   padding: 12px 24px;
   font-size: 16px;
   cursor: pointer;
@@ -32,23 +35,17 @@
 
 /* Styles for speed slider */
 .speed-control {
-  margin-top: 20px;
   display: flex;
   align-items: center;
+  gap: 8px;
 }
 
 .speed-control label {
-  margin-right: 10px;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .speed-control input[type="range"] {
-  margin-right: 10px;
-  width: 200px;
-  height: 8px;
-  border-radius: 4px;
-  background: var(--slider-track);
-  outline: none;
+  width: 150px;
 }
 
 .speed-control input[type="range"]::-webkit-slider-thumb {
@@ -73,8 +70,7 @@
 }
 
 .speed-control span {
-  font-size: 16px;
-  color: var(--text-color);
+  font-size: 14px;
 }
 
 .pattern-control {

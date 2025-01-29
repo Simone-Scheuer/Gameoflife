@@ -6,21 +6,37 @@
   justify-content: center;
   min-height: 100vh;
   padding: 10px;
+  position: relative;
 }
 
 h1 {
   margin: 0px;
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: var(--text-color);
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .controls {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 ul > li {
   list-style-type: none;
   text-align: left;
   align-items: left;
+}
+
+/* Styles for the generation counter */
+.generation-counter {
+  font-size: 12px;
+  color: var(--text-color); 
+}
+
+.controls-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
 }

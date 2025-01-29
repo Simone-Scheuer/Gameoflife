@@ -65,7 +65,7 @@ const Grid = React.memo(({ grid, setGrid, toggleCell }) => {
         const row = startRow + x;
         const col = startCol + y;
         if (row >= 0 && row < newGrid.length && col >= 0 && col < newGrid[0].length) {
-          newGrid[row][col] = 1;
+          newGrid[row][col] = 1; // Reset age to 1 on rebirth
         }
       });
 
@@ -83,10 +83,10 @@ const Grid = React.memo(({ grid, setGrid, toggleCell }) => {
     >
       {grid.map((row, i) => (
         <div key={`row-${i}`} className="row">
-          {row.map((col, j) => (
+          {row.map((age, j) => (
             <Cell 
               key={`cell-${i}-${j}`} 
-              isAlive={col} 
+              age={age} 
               toggle={() => toggleCell(i, j)} 
             />
           ))}
@@ -103,16 +103,18 @@ const Grid = React.memo(({ grid, setGrid, toggleCell }) => {
             left: preview.position.j * 22, // cellSize
             pointerEvents: 'none',
             opacity: 0.3,
+            zIndex: 10, // Ensure the overlay is above the grid but not hiding it
           }}
         >
           {patterns[preview.pattern].map(([x, y], index) => (
             <div 
               key={index} 
-              className="cell alive" 
+              className="cell"
               style={{
                 position: 'absolute',
                 top: x * 22,
                 left: y * 22,
+                backgroundColor: 'rgba(128, 128, 128, 0.5)', // Grey with transparency
               }}
             />
           ))}
