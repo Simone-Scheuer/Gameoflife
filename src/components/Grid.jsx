@@ -125,7 +125,7 @@ const Grid = React.memo(({ grid, setGrid, toggleCell }) => {
                 left: `${y * cellSize}px`,
                 width: `${cellSize - 2}px`, // Account for borders
                 height: `${cellSize - 2}px`,
-                backgroundColor: 'inherit', // Match normal cell styling
+                backgroundColor: 'darkgray', // Match normal cell styling
                 border: '1px solid #e5e5e7',
                 borderRadius: '1px',
               }}
